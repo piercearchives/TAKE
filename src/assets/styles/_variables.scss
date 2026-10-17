@@ -1,0 +1,144 @@
+// branding assets - dark
+
+$bg-dark: #2E2D2C;
+$dark-logo: #ECE7DE;
+
+// branding assets - light
+
+$bg-light: #ECE7DE ;
+$light-logo: #2E2D2C ;
+
+
+// brand colors
+$brand: #ECE7DE;
+$brand-dark:#D8D1C6;
+$brand-light: #F7F4EE;
+
+// white colors
+$white: #F0F0F0;
+$white-dark:#E3E3E3;
+$white-light:#ffffff;
+
+// black colors
+$black:#1A1713;
+$black-dark:#12100D;
+$black-light:#262521;
+
+// gray scale
+$gray-1:#D1CFCD;
+$gray-2:#BFBEBB;
+$gray-3:#B0AEAC;
+$gray-4:#A3A2A0;
+$gray-5:#969593;
+$gray-6:#8A8987;
+
+// gradients
+$gradient-1: var(--Gradients-gradient-1, linear-gradient(90deg, #2E2D2C 0.14%, #1F1E1D 99.86%));
+
+$gradient-2: var(--Gradients-gradient-2, linear-gradient(90deg, #2E2D2C 0.11%, #ECE7DE 99.89%));
+
+
+// typography
+
+// titles
+h1,h2,h3,h4,h5,h6{
+  font-family: 'Hk Grotesk';
+}
+
+h1{
+  font-size: 94px;
+  font-weight: 400;
+  line-height: 110%;
+}
+
+h2{
+  font-size: 75px;
+  font-weight: 400;
+  line-height: 120%;
+}
+
+h3{
+  font-size: 60px;
+  font-weight: 400;
+  line-height: 120%;
+}
+
+h4{
+  font-size: 48px;
+  font-weight: 400;
+  line-height: 120%;
+}
+
+h5{
+  font-size: 38px;
+  font-weight: 400;
+  line-height: 125%;
+}
+
+h6{
+  font-size: 30px;
+  font-weight: 400;
+  line-height: 130%;
+}
+
+// body
+
+p{
+font-family: 'SK Modernist';
+font-size: 24px;
+font-weight: 400;
+line-height: 150%;
+}
+
+.b1{
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 150%;
+}
+
+.b2{
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 150%;
+}
+
+.b3{
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 150%;
+}
+
+
+
+
+// responsive breakpoints
+
+$breakpoint-mobile: 640px;
+$breakpoint-tablet: 768px;
+$breakpoint-desktop: 1024px;
+
+// grid variables
+$grid-gutter-mobile:24px;
+$grid-margin-mobile:24px;
+$grid-gutter-tablet:24px;
+$grid-margin-tablet:72px;
+$grid-gutter-desktop:32px;
+$grid-margin-desktop:72px;
+
+// container-devices
+$container-l: 1920px;
+$container-m: 768px;
+$container-s: 640px;
+
+// border test
+.border{
+  border: 1px solid red;
+}
+
+.logo{
+  max-width: 40.77px;
+  max-height: 38px;
+}
+
+
+

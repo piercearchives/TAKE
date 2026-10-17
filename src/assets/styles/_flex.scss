@@ -1,0 +1,145 @@
+@use "variables" as *;
+
+.flex {
+  display: flex;
+}
+
+.inline-flex {
+  display: inline-flex;
+}
+
+.flex-row {
+  flex-direction: row;
+}
+
+.flex-row-reverse {
+  flex-direction: row-reverse;
+}
+
+.flex-column {
+  flex-direction: column;
+}
+
+.flex-column-reverse {
+  flex-direction: column-reverse;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.flex-nowrap {
+  flex-wrap: nowrap;
+}
+
+.flex-wrap-reverse {
+  flex-wrap: wrap-reverse;
+}
+
+$flex-justify-values: (
+  "start": flex-start,
+  "end": flex-end,
+  "center": center,
+  "between": space-between,
+  "around": space-around,
+  "evenly": space-evenly
+);
+
+@each $name, $value in $flex-justify-values {
+  .justify-#{$name} {
+    justify-content: $value;
+  }
+}
+
+$flex-align-values: (
+  "start": flex-start,
+  "end": flex-end,
+  "center": center,
+  "baseline": baseline,
+  "stretch": stretch
+);
+
+@each $name, $value in $flex-align-values {
+  .items-#{$name} {
+    align-items: $value;
+  }
+}
+
+.flex-1 {
+  flex: 1 1 0%;
+  min-width: 0;
+}
+
+.flex-auto {
+  flex: 1 1 auto;
+}
+
+.flex-initial {
+  flex: 0 1 auto;
+}
+
+.flex-none {
+  flex: none;
+}
+
+.flex-grow {
+  flex-grow: 1;
+}
+
+.flex-grow-0 {
+  flex-grow: 0;
+}
+
+.flex-shrink {
+  flex-shrink: 1;
+}
+
+.flex-shrink-0 {
+  flex-shrink: 0;
+}
+
+@for $weight from 1 through 5 {
+  .flex-item-#{$weight} {
+    flex: #{$weight} 1 22.5rem;
+    min-width: 0;
+  }
+}
+
+.relative {
+  position: relative;
+}
+
+$flex-breakpoints: (
+  "tablet": $breakpoint-tablet,
+  "desktop": $breakpoint-desktop
+);
+
+@each $breakpoint-name, $breakpoint in $flex-breakpoints {
+  @media (min-width: $breakpoint) {
+    @each $direction in (row, row-reverse, column, column-reverse) {
+      .flex-#{$breakpoint-name}-#{$direction} {
+        flex-direction: $direction;
+      }
+    }
+
+    @each $name, $value in $flex-justify-values {
+      .justify-#{$breakpoint-name}-#{$name} {
+        justify-content: $value;
+      }
+    }
+
+    @each $name, $value in $flex-align-values {
+      .items-#{$breakpoint-name}-#{$name} {
+        align-items: $value;
+      }
+    }
+
+    .flex-#{$breakpoint-name}-wrap {
+      flex-wrap: wrap;
+    }
+
+    .flex-#{$breakpoint-name}-nowrap {
+      flex-wrap: nowrap;
+    }
+  }
+}

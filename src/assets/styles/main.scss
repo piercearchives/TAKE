@@ -1,0 +1,509 @@
+@use "fonts";
+@use "variables" as *;
+@use "flex";
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  background-color: $gray-4;
+}
+
+// grid system
+
+.grid {
+  --grid-columns: 4;
+  --grid-gap: #{$grid-gutter-mobile};
+  --grid-margin: #{$grid-margin-mobile};
+
+  display: grid;
+  grid-template-columns: repeat(var(--grid-columns), minmax(0, 1fr));
+  gap: var(--grid-gap);
+
+  > * {
+    grid-column: 1 / -1;
+    min-width: 0;
+  }
+}
+
+@for $span from 1 through 4 {
+  .grid-span-#{$span} {
+    grid-column: span $span;
+  }
+}
+
+@media (min-width: $breakpoint-tablet) {
+  .grid {
+    --grid-columns: 8;
+    --grid-gap: #{$grid-gutter-tablet};
+    --grid-margin: #{$grid-margin-tablet};
+  }
+
+  @for $span from 1 through 8 {
+    .grid-span-tablet-#{$span} {
+      grid-column: span $span;
+    }
+  }
+}
+
+@media (min-width: $breakpoint-desktop) {
+  .grid {
+    --grid-columns: 18;
+    --grid-gap: #{$grid-gutter-desktop};
+    --grid-margin: #{$grid-margin-desktop};
+  }
+
+  @for $span from 1 through 18 {
+    .grid-span-desktop-#{$span} {
+      grid-column: span $span;
+    }
+  }
+}
+
+// spacing
+
+// variaveis e escala em rem para melhor acessibilidade
+
+$spacers: (
+  0: 0,
+  1: 0.5rem,
+  2: 1rem,
+  3: 1.5rem,
+  4: 2rem,
+  5: 3rem,
+  6: 4rem,
+  7: 4.5rem,
+  8: 6rem,
+  9: 8rem,
+);
+
+$properties: (
+  "m": "margin",
+  "p": "padding",
+);
+
+$directions: (
+  "": (
+    "",
+  ),
+  "t": (
+    "-top",
+  ),
+  "b": (
+    "-bottom",
+  ),
+  "l": (
+    "-left",
+  ),
+  "r": (
+    "-right",
+  ),
+  "x": (
+    "-left",
+    "-right",
+  ),
+  "y": (
+    "-top",
+    "-bottom",
+  ),
+);
+
+// loop para gerar as classes de forma automática
+@each $prop-prefix, $prop-name in $properties {
+  @each $dir-prefix, $dir-props in $directions {
+    @each $key, $value in $spacers {
+      .#{$prop-prefix}#{$dir-prefix}-#{$key} {
+        @each $dir-prop in $dir-props {
+          #{$prop-name}#{$dir-prop}: $value !important;
+        }
+      }
+    }
+  }
+}
+
+// loop para gerar gaps de forma automática
+@each $key, $value in $spacers {
+  .gap-#{$key} {
+    gap: $value;
+  }
+
+  .gap-x-#{$key} {
+    column-gap: $value;
+  }
+
+  .gap-y-#{$key} {
+    row-gap: $value;
+  }
+}
+
+// container default
+
+.container {
+  width: 100%;
+  max-width: $container-l;
+  margin-inline: auto;
+  padding-inline: $grid-margin-mobile;
+
+  @media (min-width: $breakpoint-tablet) {
+    padding-inline: $grid-margin-tablet;
+  }
+
+  @media (min-width: $breakpoint-desktop) {
+    padding-inline: $grid-margin-desktop;
+  }
+}
+
+// button menu
+.button-menu {
+  gap: 10px;
+  width: fit-content;
+  background: transparent;
+  flex-shrink: 0;
+  padding: 4px;
+  border: 0;
+  cursor: pointer;
+  position: relative;
+  z-index: 4;
+
+  .content {
+    font-family: "SK Modernist";
+    font-weight: 700;
+    letter-spacing: 0.4px;
+    font-size: 24px;
+    color: $bg-dark;
+    margin-left: 6px;
+    margin-bottom: 4px;
+  }
+
+  .button-menu__box {
+    display: flex;
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    background-color: $bg-dark;
+    border-radius: 4px;
+
+    .button-menu__icon {
+      display: block;
+      width: 24px;
+      height: 24px;
+    }
+  }
+
+  .button-menu__label-clip {
+    display: block;
+    width: max-content;
+    overflow: hidden;
+  }
+
+  .button-menu__label-window {
+    display: block;
+    height: 1.2em;
+    margin-bottom: 6px;
+    margin-left: 6px;
+    overflow: hidden;
+    font-size: 24px;
+    line-height: 1.2;
+
+    .content {
+      display: block;
+      flex: 0 0 1.2em;
+      font-family: "SK Modernist";
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: 0.4px;
+      line-height: 1.2;
+      color: $bg-dark;
+      margin: 0;
+    }
+
+    .button-menu__label-track {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+
+  .button-menu__toggle {
+    display: flex;
+    flex-shrink: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+  }
+
+  .button-menu__arrow-window {
+    position: relative;
+    width: 24px;
+    height: 24px;
+    overflow: hidden;
+  }
+
+  .button-menu__arrow-slot {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 24px;
+    height: 24px;
+  }
+
+  .button-menu__arrow {
+    display: block;
+    width: 24px;
+    height: 24px;
+  }
+}
+
+.account-button {
+  gap: 10px;
+  width: fit-content;
+  background-color: $brand;
+  border-radius: 6px;
+
+  padding: 4px;
+  border: 0;
+  cursor: pointer;
+
+  .content {
+    font-family: "SK Modernist";
+    font-weight: 700;
+    letter-spacing: 0.4px;
+    font-size: 24px;
+    color: $bg-dark;
+    margin-left: 6px;
+    margin-bottom: 4px;
+  }
+
+  .button-menu__box {
+    display: flex;
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    background-color: $bg-dark;
+    border-radius: 4px;
+
+    .button-menu__icon {
+      display: block;
+      width: 24px;
+      height: 24px;
+    }
+  }
+}
+
+.account-arrow-window {
+  position: relative;
+  width: 24px;
+  height: 24px;
+  overflow: hidden;
+}
+
+.account-arrow-slot {
+  position: absolute;
+  inset: 0;
+  width: 24px;
+  height: 24px;
+}
+
+.account-arrow {
+  display: block;
+  width: 24px;
+  height: 24px;
+}
+
+.account-label-window {
+  display: block;
+  height: 1.2em;
+  overflow: hidden;
+  font-size: 24px;
+  line-height: 1.2;
+  margin-bottom: 4px;
+}
+
+.account-label-track {
+  display: flex;
+  flex-direction: column;
+}
+
+.account-button .account-label-track .content {
+  display: block;
+  flex: 0 0 1.2em;
+  margin: 0;
+  line-height: 1.2;
+  margin-left: 6px;
+}
+
+.account-button__inner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.grid > .menu-shell {
+  min-width: max-content;
+}
+
+.menu-shell {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  width: max-content;
+  min-width: max-content;
+  overflow: hidden;
+  border-radius: 6px;
+  background-color: $brand;
+}
+
+.menu-shell__stage {
+  position: relative;
+  display: grid;
+  align-items: center;
+  overflow: hidden;
+  flex: 0 0 auto;
+}
+
+.menu-links {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  padding-inline: 6px;
+  white-space: nowrap;
+  pointer-events: none;
+  margin-bottom: 6px;
+}
+
+.menu-shell.is-open .menu-links {
+  pointer-events: auto;
+}
+
+.menu-link {
+  display: block;
+  overflow: hidden;
+  height: 1.2em;
+  line-height: 1.2;
+  font-size: 20px;
+}
+
+.menu-link a {
+  display: block;
+  color: $bg-dark;
+  text-decoration: none;
+  font-family: "SK Modernist";
+  font-weight: 700;
+  font-size: 20px;
+  letter-spacing: 0.4px;
+  line-height: inherit;
+}
+
+.menu-link__label {
+  display: block;
+  line-height: inherit;
+}
+
+.header-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 30px;
+  grid-column: 6 / -1;
+}
+
+.button-search,
+.site-audio-toggle {
+  
+  display: flex;
+  width: 44px;
+  height: 44px;
+  flex: 0 0 44px;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 8px;
+  background: $bg-dark;
+  z-index: 2;
+}
+
+.button-search .icon-search {
+  display: block;
+  width: 26px;
+  height: 26px;
+}
+
+.site-audio-toggle__icon {
+  display: block;
+  width: 30px;
+  height: 30px;
+}
+
+
+
+
+.search {
+  display: grid;
+  align-items: center;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+
+  .button-search,
+  .input-search {
+    grid-area: 1 / 1;
+  }
+
+  .button-search {
+    z-index: 2;
+    justify-self: end;
+  }
+
+.text-area{
+
+  grid-area: 1 / 1;
+  
+  width: 44px;
+  height: 44px;
+  background-color: $black;
+  border-radius: 8px;
+  justify-self: center;
+  display: flex;
+  align-items: center;
+  
+
+
+//  finalizei o alinhamento do botao via css, o botao principal e o text area diminuido para 30px, meu objetivo agora é fazer a animação, fazendo com gsap mesmo, onde por padrao ele é 30px, quando pressionado ele vai crescer ate 44px totais, um quadrado, depois que ele formar este quadrado ele cresce para o lado esquerdo. eu fiz algumas alteracoes, ao inves de eu animar o input (que é bem teimoso sozinho) eu pensei em envolver na verdade ele por uma div, onde eu reconfigurei ele sem preguiça nenhuma e com a ajuda da ia basicamente eu consegui encontrar alguns erros bem simples, do qual tem certas estruturas css que eu comecei a mexer por agora, nesse caso eu tinha um problema em relacao ao grid que para centralizar ele eu utilizei o mesmo justify self para centraliza-lo e espero que ele fique assim mesmo default e durante a animacao. 
+
+  .input-search {
+    
+    border: none;
+    background-color: transparent;
+    color: $white;
+    outline: none;
+    font-family: 'SK Modernist';
+    font-size: 18px;
+    font-weight: 500;
+    width: 100%;
+    min-width: 0;
+    line-height: 20;
+    letter-spacing: 0.4px;
+    height: 20px;
+    
+  }
+}
+
+}
